@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-$!(+(+vg^_ww!l^0@=kpn@sg5p91hxmag-r7tuojop9or5uqgx
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','spogo-score.herokuapp.com']
+CORS_ALLOW_ALL_ORIGINS=True
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Score.apps.ScoreConfig',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'SpogoScore.urls'
