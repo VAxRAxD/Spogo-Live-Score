@@ -5,6 +5,7 @@ from . apicalls import *
 import datetime
 import pytz
 IST = pytz.timezone('Asia/Kolkata')
+flag=True
 
 def getMatchDetails():
     data=None
@@ -55,8 +56,10 @@ def getStats():
         details=getScoreCard(live["matchId"])
         if "won by" in details["status"]:
             print("Match Completed and count down intiated")
-            cache.delete("match")
-            cache.set("match",live,timeout=300)
+            if flag:
+                cache.delete("match")
+                cache.set("match",live,timeout=300)
+                flag=False
     else:
         cache.delete("score")
         return
