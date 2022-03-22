@@ -345,7 +345,8 @@ def getStats():
 def getPoints():
     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
     if 19.00<float(h+"."+m)<19.30 or 23.00<float(h+"."+m)<23.59:
-        table=getPointsTable(3472)
+        # table=getPointsTable(3472)
+        table={}
         data=dict()
         for team in table["pointsTable"][0]["pointsTableInfo"]:
             data[team["teamName"]]=dict()
