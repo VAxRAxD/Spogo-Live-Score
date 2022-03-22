@@ -12,3 +12,7 @@ def getScore(request):
             'status':'No Ongoing Matches'
         }
         return JsonResponse(data)
+
+def pointsTable(request):
+    data=cache.get("points")
+    return JsonResponse(data)
