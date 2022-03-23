@@ -25,7 +25,7 @@ def getMatchDetails():
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==0000: #3482 #3202 *#3657 #3863
+                    if series["seriesMatches"]["seriesId"]==3657: #3482 #3202 *#3657 #3863
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass
@@ -255,8 +255,6 @@ def getStats():
                 "teamScore":"Yet to Bat"
             }
         }
-        data["team1"]["scorecard"]={"batters":allbatters[live["team1"]]}
-        data["team2"]["scorecard"]={"batters":allbatters[live["team2"]]}
         cache.set("score",data,None)
         return
         
@@ -280,7 +278,7 @@ def getStats():
             data["team1"]["currBowler"]=bowler[live["team1"]]
         if details["status"]=="Innings Break":
             data["team2"].pop("currBatters")
-        data["team1"]["scorecard"]={"batters":allbatters[live["team1"]]}
+        data["team1"]["scorecard"]=dict()
         data["team1"]["scorecard"]["bowlers"]=allbowlers[live["team1"]]
         data["team2"]["scorecard"]={"batters":allbatters[live["team2"]]}
         cache.set("score",data,None)
@@ -309,7 +307,7 @@ def getStats():
         if details["status"]=="Innings Break":
             data["team1"].pop("currBatters")
         data["team1"]["scorecard"]={"batters":allbatters[live["team1"]]}
-        data["team2"]["scorecard"]={"batters":allbatters[live["team2"]]}
+        data["team2"]["scorecard"]=dict()
         data["team2"]["scorecard"]["bowlers"]=allbowlers[live["team2"]]
         cache.set("score",data,None)
         return
