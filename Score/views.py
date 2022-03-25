@@ -9,10 +9,16 @@ def getScore(request):
         return JsonResponse(data)
     else:
         data={
-            'status':'No Ongoing Matches'
+            'status':False
         }
         return JsonResponse(data)
 
 def pointsTable(request):
     data=cache.get("points")
     return JsonResponse(data)
+
+def clear(request):
+    cache.clear()
+    print(cache.get("match"))
+    print(cache.get("score"))
+    return HttpResponse("")

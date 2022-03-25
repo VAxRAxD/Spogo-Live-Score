@@ -13,11 +13,11 @@ def getMatchDetails():
     if not cache.get("match"):
         h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
         # if 15.20<float(h+"."+m)<18.30 or 19.20<float(h+"."+m)<23.00:
-        if 16.20<float(h+"."+m)<20.00:
+        if 8.20<float(h+"."+m)<20.00:
             print("Its time for match")
             api=getLiveMatches()
             for matches in api["typeMatches"]:
-                if matches["matchType"]=="International":
+                if matches["matchType"]=="Women":
                     data=matches["seriesAdWrapper"]
             if data==None:
                 print("No womens series found")
@@ -25,7 +25,7 @@ def getMatchDetails():
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==3657: #3482 #3202 *#3657 #3863
+                    if series["seriesMatches"]["seriesId"]==3202: #3482 #3202 #3657 #3863
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass
@@ -52,7 +52,7 @@ def getMatchDetails():
 def getStats():
     global flag,nobat
     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
-    if float(h+"."+m)<=16.25:
+    if float(h+"."+m)>=23.25:
         return
     print("Call for score")
     live=cache.get("match")
@@ -77,6 +77,22 @@ def getStats():
         cache.delete("score")
         flag=True
         return
+    try:
+        scorecard=details["scorecard"]
+    except:
+        data={
+            "status":details["status"],
+            "team1":{
+                "teamName":live["team1"],
+                "teamScore":"Yet to Bat",
+            },
+            "team2":{
+                "teamName":live["team2"],
+                "teamScore":"Yet to Bat"
+            }
+        }
+        cache.set("score",data,None)
+        return
     team1score=dict()
     team2score=dict()
     team1wickets=dict()
@@ -91,7 +107,6 @@ def getStats():
     bowler[live["team1"]]=dict()
     bowler[live["team2"]]=dict()
     allbowlers=dict()
-    scorecard=details["scorecard"]
     for innings in scorecard:
         if innings["batTeamSName"]==live["team1"]:
             try:
@@ -198,7 +213,11 @@ def getStats():
                     allbatters[innings["batTeamSName"]][inning][name]["outDec"]=batter["outDec"]
                     
             except:
-                allbatters[innings["batTeamSName"]][inning][name]=nobat
+                try:
+                    if innings["wickets"]==10:
+                        allbatters[innings["batTeamSName"]][inning][name]="Did not bat"
+                except:
+                    allbatters[innings["batTeamSName"]][inning][name]=nobat
         if innings["batTeamSName"]==live["team1"]:
             bowlteam=live["team2"]
         else:
