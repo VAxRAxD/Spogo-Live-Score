@@ -1,4 +1,3 @@
-from itertools import count
 from django.http import HttpResponse, JsonResponse
 from django.core.cache import cache
 
@@ -16,9 +15,6 @@ def getScore(request):
             }
             return JsonResponse(data)
 
-def pointsTable(request):
-    data=cache.get("points")
-    return JsonResponse(data)
 
 def clear(request):
     cache.clear()

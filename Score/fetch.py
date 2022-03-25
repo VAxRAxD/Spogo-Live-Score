@@ -3,38 +3,46 @@ from django.core.cache import cache
 from . apicalls import *
 import datetime
 import pytz
+
+#Convert GMT to IST
 IST = pytz.timezone('Asia/Kolkata')
+
+#Global variables for state change
 flag=True
-post=False
 nobat="Yet to bat"
 
+#Get live match details
 def getMatchDetails():
     data=None
     if not cache.get("match"):
         h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
-        # if 15.20<float(h+"."+m)<18.30 or 19.20<float(h+"."+m)<23.00:
-        if 8.20<float(h+"."+m)<23.00:
-            print("Its time for match")
+        #Check for time range
+        if 0.0<float(h+"."+m)<23.59:
+            #Helper for debugger
+            print("Match Time")
+            #API call for getting live match details
             api=getLiveMatches()
             for matches in api["typeMatches"]:
                 if matches["matchType"]=="International":
                     data=matches["seriesAdWrapper"]
             if data==None:
-                print("No womens series found")
+                #Helper for debugger
+                print("No IPL series found")
                 return
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==3482: #3482 #3202 #3657 #3863
+                    if series["seriesMatches"]["seriesId"]==3482:
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass
             if matches==None:
+                #Helper for debuggers
                 print("No current matches in series")
                 return
             live=None
             for match in matches:
-                # if match["matchInfo"]["matchId"]==38436:
+                # To check if match is live or not
                 if match["matchInfo"]["state"]!="Upcoming" and match["matchInfo"]["state"]!="Complete":
                     live=match["matchInfo"]
                     break
@@ -49,37 +57,42 @@ def getMatchDetails():
                 print("No live matches")
                 return
 
+#Get live match score
 def getStats():
     global flag,nobat
     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
-    if float(h+"."+m)>=23.25:
+    #Check for time range
+    if float(h+"."+m)>=23.59:
         return
+    #Helper for debugger
     print("Call for score")
+    #Get match details from cache
     live=cache.get("match")
+    #Helper for debugger
     print("Live match is",live)
     if live:
         details=getScoreCard(live["matchId"])
+        #Check if the match is over
         if "won by" in details["status"] or "Match drawn" in details["status"]:
-            if "super over" in details["status"]:
-                if flag:
-                    print("Match in super over")
-                    cache.delete("match")
-                    cache.set("match",live,timeout=1800)
-                    flag=False
             if flag:
+                #Helper for debugger
                 print("Match Completed and count down intiated")
                 cache.delete("match")
+                #Intiating Post match shutdown time of 15 minutes
                 cache.set("match",live,timeout=900)
+                #Add the current match score to recents
                 cache.set("recent",cache.get("score"),None)
                 flag=False
                 nobat="Did not bat"
     else:
+        #Remove scorecard from cache if post match shutdown time is over
         cache.delete("score")
         flag=True
         return
     try:
         scorecard=details["scorecard"]
     except:
+        #If match has not started yet
         data={
             "status":details["status"],
             "team1":{
@@ -93,6 +106,7 @@ def getStats():
         }
         cache.set("score",data,None)
         return
+    #Initialize variables (not the correct way, need to be optimized)
     team1score=dict()
     team2score=dict()
     team1wickets=dict()
@@ -107,6 +121,7 @@ def getStats():
     bowler[live["team1"]]=dict()
     bowler[live["team2"]]=dict()
     allbowlers=dict()
+    #To track number of innings in match
     count=0
     for innings in scorecard:
         if innings["batTeamSName"]==live["team1"]:
@@ -362,30 +377,34 @@ def getStats():
     cache.set("score",data,None)
     return
 
-def getPoints():
-    h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
-    if 19.00<float(h+"."+m)<19.30 or 23.00<float(h+"."+m)<23.59:
-        # table=getPointsTable(3472)
-        table={}
-        data=dict()
-        for team in table["pointsTable"][0]["pointsTableInfo"]:
-            data[team["teamName"]]=dict()
-            try:
-                data[team["teamName"]]["matchesPlayed"]=team["matchesPlayed"]
-            except:
-                data[team["teamName"]]["matchesPlayed"]=0
-            try:
-                data[team["teamName"]]["matchesWon"]=team["matchesWon"]
-            except:
-                data[team["teamName"]]["matchesWon"]=0
-            try:
-                data[team["teamName"]]["matchesLost"]=team["matchesLost"]
-            except:
-                data[team["teamName"]]["matchesLost"]=0
-            try:
-                data[team["teamName"]]["points"]=team["points"]
-            except:
-                data[team["teamName"]]["points"]=0
-            data[team["teamName"]]["nrr"]=team["nrr"]
-        cache.set("points",data,None)
-    return
+"""
+Points Functionality for IPL 2022
+Schedule a job in jobs.py for this function in every one hour
+Only call to API between 7.00pm to 8.00pm and 11.00 to 11.59pm
+"""
+# def getPoints():
+#     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
+#     if 19.00<float(h+"."+m)<20.00 or 23.00<float(h+"."+m)<23.59:
+#         table=getPointsTable(3472)
+#         data=dict()
+#         for team in table["pointsTable"][0]["pointsTableInfo"]:
+#             data[team["teamName"]]=dict()
+#             try:
+#                 data[team["teamName"]]["matchesPlayed"]=team["matchesPlayed"]
+#             except:
+#                 data[team["teamName"]]["matchesPlayed"]=0
+#             try:
+#                 data[team["teamName"]]["matchesWon"]=team["matchesWon"]
+#             except:
+#                 data[team["teamName"]]["matchesWon"]=0
+#             try:
+#                 data[team["teamName"]]["matchesLost"]=team["matchesLost"]
+#             except:
+#                 data[team["teamName"]]["matchesLost"]=0
+#             try:
+#                 data[team["teamName"]]["points"]=team["points"]
+#             except:
+#                 data[team["teamName"]]["points"]=0
+#             data[team["teamName"]]["nrr"]=team["nrr"]
+#         cache.set("points",data,None)
+#     return
