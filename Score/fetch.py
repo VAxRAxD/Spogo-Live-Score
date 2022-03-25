@@ -58,7 +58,6 @@ def getStats():
     live=cache.get("match")
     print("Live match is",live)
     if live:
-        print("API call")
         details=getScoreCard(live["matchId"])
         if "won by" in details["status"] or "Match drawn" in details["status"]:
             if "super over" in details["status"]:
@@ -107,6 +106,7 @@ def getStats():
     bowler[live["team1"]]=dict()
     bowler[live["team2"]]=dict()
     allbowlers=dict()
+    count=0
     for innings in scorecard:
         if innings["batTeamSName"]==live["team1"]:
             try:
@@ -211,10 +211,9 @@ def getStats():
                         allbatters[innings["batTeamSName"]][inning][name]["sixes"]=0
                     allbatters[innings["batTeamSName"]][inning][name]["strkRate"]=batter["strkRate"]
                     allbatters[innings["batTeamSName"]][inning][name]["outDec"]=batter["outDec"]
-                    
             except:
                 try:
-                    if innings["wickets"]==10:
+                    if scorecard[count+1]:
                         allbatters[innings["batTeamSName"]][inning][name]="Did not bat"
                     else:
                         allbatters[innings["batTeamSName"]][inning][name]=nobat
@@ -264,6 +263,7 @@ def getStats():
                         allbowlers[bowlteam][inning][name]["economy"]=0
             except:
                 pass
+        count+=1
     if len(team1score)==0 and len(team2score)==0:
         data={
             "status":details["status"],

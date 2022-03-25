@@ -60,7 +60,7 @@ ROOT_URLCONF = 'SpogoScore.urls'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://2.tcp.ngrok.io:19776",
+        "LOCATION": "redis://6.tcp.ngrok.io:19908",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
