@@ -216,6 +216,8 @@ def getStats():
                 try:
                     if innings["wickets"]==10:
                         allbatters[innings["batTeamSName"]][inning][name]="Did not bat"
+                    else:
+                        allbatters[innings["batTeamSName"]][inning][name]=nobat
                 except:
                     allbatters[innings["batTeamSName"]][inning][name]=nobat
         if innings["batTeamSName"]==live["team1"]:
