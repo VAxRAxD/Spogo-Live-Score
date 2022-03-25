@@ -17,7 +17,7 @@ def getMatchDetails():
             print("Its time for match")
             api=getLiveMatches()
             for matches in api["typeMatches"]:
-                if matches["matchType"]=="Women":
+                if matches["matchType"]=="International":
                     data=matches["seriesAdWrapper"]
             if data==None:
                 print("No womens series found")
@@ -25,7 +25,7 @@ def getMatchDetails():
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==3202: #3482 #3202 #3657 #3863
+                    if series["seriesMatches"]["seriesId"]==3863: #3482 #3202 #3657 #3863
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass
@@ -70,7 +70,7 @@ def getStats():
             if flag:
                 print("Match Completed and count down intiated")
                 cache.delete("match")
-                cache.set("match",live,timeout=300)
+                cache.set("match",live,timeout=900)
                 flag=False
                 nobat="Did not bat"
     else:
