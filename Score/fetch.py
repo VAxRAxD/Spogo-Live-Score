@@ -13,7 +13,7 @@ def getMatchDetails():
     if not cache.get("match"):
         h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
         # if 15.20<float(h+"."+m)<18.30 or 19.20<float(h+"."+m)<23.00:
-        if 8.20<float(h+"."+m)<20.00:
+        if 8.20<float(h+"."+m)<23.00:
             print("Its time for match")
             api=getLiveMatches()
             for matches in api["typeMatches"]:
@@ -25,7 +25,7 @@ def getMatchDetails():
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==3863: #3482 #3202 #3657 #3863
+                    if series["seriesMatches"]["seriesId"]==3482: #3482 #3202 #3657 #3863
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass

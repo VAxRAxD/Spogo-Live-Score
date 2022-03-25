@@ -7,7 +7,7 @@ def getLiveMatches():
     querystring = {"matchState":"live"}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "272f1cf371mshd360f5e2201ed15p1e9da2jsn0aa84b1345cf"
+	    "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
@@ -19,7 +19,7 @@ def getScoreCard(matchId):
     querystring = {"matchId":matchId}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "272f1cf371mshd360f5e2201ed15p1e9da2jsn0aa84b1345cf"
+	    "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
@@ -31,7 +31,7 @@ def getPointsTable(seriesId):
     querystring = {"seriesId":seriesId}
     headers = {
         "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-        "X-RapidAPI-Key": ""
+        "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
