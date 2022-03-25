@@ -70,6 +70,7 @@ def getStats():
                 print("Match Completed and count down intiated")
                 cache.delete("match")
                 cache.set("match",live,timeout=900)
+                cache.set("recent",cache.get("score"),None)
                 flag=False
                 nobat="Did not bat"
     else:

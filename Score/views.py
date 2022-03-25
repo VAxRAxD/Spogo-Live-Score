@@ -7,10 +7,14 @@ def getScore(request):
         data=cache.get("score")
         return JsonResponse(data)
     else:
-        data={
-            'status':False
-        }
-        return JsonResponse(data)
+        if cache.get("recent"):
+            data=cache.get("recent")
+            return JsonResponse(data)
+        else:
+            data={
+                'status':False
+            }
+            return JsonResponse(data)
 
 def pointsTable(request):
     data=cache.get("points")
