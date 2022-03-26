@@ -28,6 +28,7 @@ def getScoreCard(matchId):
 """
 API call points table of IPL 2022
 Activate if necesssary
+Enter the API key in headers
 """
 # def getPointsTable(seriesId):
 #     print("API Call")
@@ -35,7 +36,7 @@ Activate if necesssary
 #     querystring = {"seriesId":seriesId}
 #     headers = {
 #         "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-#         "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
+#         "X-RapidAPI-Key": ""
 #     }
 #     response = requests.request("GET", url, headers=headers, params=querystring)
 #     api = json.loads(response.text)

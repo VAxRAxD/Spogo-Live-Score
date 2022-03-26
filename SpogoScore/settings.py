@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$!(+(+vg^_ww!l^0@=kpn@sg5p91hxmag-r7tuojop9or5uqgx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','127.0.0.1:6379','spogo-score.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','spogo-score.herokuapp.com']
 CORS_ALLOW_ALL_ORIGINS=True
 
 
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'SpogoScore.urls'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://0.tcp.ngrok.io:14189",
+        "LOCATION": "redis://5.183.8.88:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },

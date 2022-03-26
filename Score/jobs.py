@@ -3,6 +3,6 @@ from . fetch import *
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(getMatchDetails,'interval', minutes=60)
-    scheduler.add_job(getStats, 'interval', minutes=60)
+    scheduler.add_job(getMatchDetails,'interval', minutes=10)
+    scheduler.add_job(getStats, 'interval', seconds=30)
     scheduler.start()

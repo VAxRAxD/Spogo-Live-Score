@@ -17,7 +17,7 @@ def getMatchDetails():
     if not cache.get("match"):
         h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
         #Check for time range
-        if 0.0<float(h+"."+m)<23.59:
+        if 15.30<float(h+"."+m)<18.30 or 19.30<float(h+"."+m)<22.30:
             #Helper for debugger
             print("Match Time")
             #API call for getting live match details
@@ -62,7 +62,7 @@ def getStats():
     global flag,nobat
     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
     #Check for time range
-    if float(h+"."+m)>=23.59:
+    if float(h+"."+m)<15.30:
         return
     #Helper for debugger
     print("Call for score")
