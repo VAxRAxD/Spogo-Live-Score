@@ -17,7 +17,7 @@ def getMatchDetails():
     if not cache.get("match"):
         h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
         #Check for time range
-        if 15.30<float(h+"."+m)<18.30 or 19.30<float(h+"."+m)<22.30:
+        if 15.00<float(h+"."+m)<18.00 or 19.00<float(h+"."+m)<22.30:
             #Helper for debugger
             print("Match Time")
             #API call for getting live match details
@@ -32,7 +32,7 @@ def getMatchDetails():
             matches=None
             for series in data:
                 try:
-                    if series["seriesMatches"]["seriesId"]==3482:
+                    if series["seriesMatches"]["seriesId"]==4061:
                         matches=series["seriesMatches"]["matches"]
                 except:
                     pass
@@ -62,7 +62,7 @@ def getStats():
     global flag,nobat
     h,m=(datetime.datetime.now(IST).strftime("%H %M").split(" "))
     #Check for time range
-    if float(h+"."+m)<15.30:
+    if float(h+"."+m)<15.00:
         return
     #Helper for debugger
     print("Call for score")

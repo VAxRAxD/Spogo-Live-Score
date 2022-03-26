@@ -7,7 +7,7 @@ def getLiveMatches():
     querystring = {"matchState":"live"}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
+	    "X-RapidAPI-Key": "0f01899b6bmsh4673c9213d932c8p113a06jsnde06f3400db6"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
@@ -19,7 +19,7 @@ def getScoreCard(matchId):
     querystring = {"matchId":matchId}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "8371cc6094msh32984b9598aed5ep1731b6jsn14056246b92a"
+	    "X-RapidAPI-Key": "0f01899b6bmsh4673c9213d932c8p113a06jsnde06f3400db6"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
