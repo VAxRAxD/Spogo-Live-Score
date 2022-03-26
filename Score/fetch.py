@@ -23,7 +23,7 @@ def getMatchDetails():
             #API call for getting live match details
             api=getLiveMatches()
             for matches in api["typeMatches"]:
-                if matches["matchType"]=="International":
+                if matches["matchType"]=="League":
                     data=matches["seriesAdWrapper"]
             if data==None:
                 #Helper for debugger
