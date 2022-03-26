@@ -83,11 +83,12 @@ def getStats():
                 flag=False
                 nobat="Did not bat"
     else:
-        #Add the current match score to recents
-        data=cache.get("score")
-        cache.set("recent",data,None)
-        #Remove scorecard from cache if post match shutdown time is over
-        cache.delete("score")
+        if cache.get("score"):
+            #Add the current match score to recents
+            data=cache.get("score")
+            cache.set("recent",data,None)
+            #Remove scorecard from cache if post match shutdown time is over
+            cache.delete("score")
         flag=True
         return
     try:
