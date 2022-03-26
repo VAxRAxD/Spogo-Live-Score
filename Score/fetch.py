@@ -80,11 +80,11 @@ def getStats():
                 cache.delete("match")
                 #Intiating Post match shutdown time of 15 minutes
                 cache.set("match",live,timeout=900)
-                #Add the current match score to recents
-                cache.set("recent",cache.get("score"),None)
                 flag=False
                 nobat="Did not bat"
     else:
+        #Add the current match score to recents
+        cache.set("recent",cache.get("score"),None)
         #Remove scorecard from cache if post match shutdown time is over
         cache.delete("score")
         flag=True
