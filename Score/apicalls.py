@@ -1,5 +1,6 @@
 import json
 import requests
+from . import config
 
 def getLiveMatches():
     print("API Call")
@@ -7,7 +8,7 @@ def getLiveMatches():
     querystring = {"matchState":"live"}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "0f01899b6bmsh4673c9213d932c8p113a06jsnde06f3400db6"
+	    "X-RapidAPI-Key": config.API_KEY
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
@@ -19,7 +20,7 @@ def getScoreCard(matchId):
     querystring = {"matchId":matchId}
     headers = {
 	    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-	    "X-RapidAPI-Key": "0f01899b6bmsh4673c9213d932c8p113a06jsnde06f3400db6"
+	    "X-RapidAPI-Key": config.API_KEY
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     api = json.loads(response.text)
