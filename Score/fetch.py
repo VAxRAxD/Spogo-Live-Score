@@ -71,6 +71,7 @@ def getStats():
     #Helper for debugger
     print("Live match is",live)
     if live:
+        cache.delete("recent")
         details=getScoreCard(live["matchId"])
         #Check if the match is over
         if "won by" in details["status"] or "Match drawn" in details["status"]:
