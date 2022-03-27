@@ -1,7 +1,5 @@
 import environ
 
-from SpogoScore.settings import SECRET_KEY
-
 env = environ.Env()
 environ.Env.read_env()
 
