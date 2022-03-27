@@ -1,6 +1,6 @@
 import json
 import requests
-from . import config
+from SpogoScore import config
 
 def getLiveMatches():
     print("API Call")
