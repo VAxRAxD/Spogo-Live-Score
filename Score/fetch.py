@@ -80,7 +80,10 @@ def getStats():
                 print("Match Completed and count down intiated")
                 cache.delete("match")
                 #Intiating Post match shutdown time of 15 minutes
-                cache.set("match",live,timeout=900)
+                if float(h+"."+m)>20.00:
+                    cache.set("match",live,timeout=900)
+                else:
+                    cache.set("match",live,timeout=300)
                 flag=False
                 nobat="Did not bat"
     else:
