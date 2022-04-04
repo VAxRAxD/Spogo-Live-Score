@@ -21,9 +21,3 @@ def clear(request):
     print(cache.get("match"))
     print(cache.get("score"))
     return HttpResponse("")
-
-def block(request):
-    data={
-        'status':False
-    }
-    return JsonResponse(data)
